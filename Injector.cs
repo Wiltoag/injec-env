@@ -28,8 +28,8 @@ namespace injecenv
         private DriveInfo Drive { get; }
         private string PathEnvironnementVariable { get; }
         private List<string> PathsToRemove { get; }
-        private List<string> ToDelete { get; }
-        private Dictionary<string, string> ToRevert { get; }
+        private List<(string Key, string NewValue)> ToDelete { get; }
+        private Dictionary<string, (string Old, string New)> ToRevert { get; }
 
         public void Revert()
         {
@@ -39,14 +39,28 @@ namespace injecenv
                 Console.WriteLine("Reverting actions...".Pastel(Color.Orange));
                 foreach (var todel in ToDelete)
                 {
-                    Environment.SetEnvironmentVariable(todel, null, EnvironmentVariableTarget.User);
-                    Console.WriteLine("Variable " + todel.Pastel(Color.LightYellow) + " deleted".Pastel(Color.Red));
+                    var currentValue = Environment.GetEnvironmentVariable(todel.Key, EnvironmentVariableTarget.User);
+                    if (currentValue != todel.NewValue)
+                    {
+                        // The variable has changed by an external tool or something, we don't revert anything
+                        Console.WriteLine("Variable " + todel.Key.Pastel(Color.LightYellow) + " has been changed during the runtime, no action is done");
+                        continue;
+                    }
+                    Environment.SetEnvironmentVariable(todel.Key, null, EnvironmentVariableTarget.User);
+                    Console.WriteLine("Variable " + todel.Key.Pastel(Color.LightYellow) + " deleted".Pastel(Color.Red));
                 }
                 ToDelete.Clear();
                 foreach (var torev in ToRevert)
                 {
-                    Environment.SetEnvironmentVariable(torev.Key, torev.Value, EnvironmentVariableTarget.User);
-                    Console.WriteLine("Variable " + torev.Key.Pastel(Color.LightYellow) + " reverted to " + torev.Value.Pastel(Color.LightGreen));
+                    var currentValue = Environment.GetEnvironmentVariable(torev.Key, EnvironmentVariableTarget.User);
+                    if (currentValue != torev.Value.New)
+                    {
+                        // The variable has changed by an external tool or something, we don't revert anything
+                        Console.WriteLine("Variable " + torev.Key.Pastel(Color.LightYellow) + " has been changed during the runtime, no action is done");
+                        continue;
+                    }
+                    Environment.SetEnvironmentVariable(torev.Key, torev.Value.Old, EnvironmentVariableTarget.User);
+                    Console.WriteLine("Variable " + torev.Key.Pastel(Color.LightYellow) + " reverted to " + torev.Value.Old.Pastel(Color.LightGreen));
                 }
                 ToRevert.Clear();
                 if (PathsToRemove.Any())
@@ -77,13 +91,13 @@ namespace injecenv
                 var initialValue = Environment.GetEnvironmentVariable(setVariable.Key, EnvironmentVariableTarget.User);
                 if (initialValue is null)
                 {
-                    ToDelete.Add(setVariable.Key);
+                    ToDelete.Add((setVariable.Key, value));
                     Console.WriteLine("Variable " + setVariable.Key.Pastel(Color.LightYellow) + " set to " + value.Pastel(Color.LightGreen));
                     Environment.SetEnvironmentVariable(setVariable.Key, value, EnvironmentVariableTarget.User);
                 }
                 else
                 {
-                    ToRevert.Add(setVariable.Key, initialValue);
+                    ToRevert.Add(setVariable.Key, (initialValue, value));
                     Console.WriteLine("Variable " + setVariable.Key.Pastel(Color.LightYellow) + " changed from " +
                         initialValue.Pastel(Color.Red) + " to " + value.Pastel(Color.LightGreen));
                     Environment.SetEnvironmentVariable(setVariable.Key, value, EnvironmentVariableTarget.User);
