@@ -1,6 +1,6 @@
 # injec-env
 
-Console program for Windows to edit user environnement variables temporarily (in `HKCU`, so no admins rights needed).
+Console program for Windows to edit user environnement variables temporarily (in `HKCU`, so no admins rights needed). For when you want to have portable softwares on an USB stick that instantly work using the CLI, for example, or set that damn `JAVA_HOME` using a jdk on an USB stick.
 
 
 ## How to use
@@ -10,6 +10,12 @@ First, make sure the files are **NOT** in an admin rights protected folder.
 To use it, create a config file called `rules.json` next to the `Injec Env.exe`. If you run the .exe without it, it will create an example for you.
 
 Once done, just start the .exe and it will do its magic. To stop, write `exit` or Ctrl+C. **DO NOT CLOSE THE WINDOW OR KILL THE PROCESS** ; doing so will likely not give enough time to revert the changes.
+
+It is possible to :
+- Set a new variable, which is deleted once the program stops.
+- Set an existing variable, which is reverted once the program stops.
+- Add values to the `Path` variable.
+- Does not revert values if the said values has changed while the program was active.
 
 ## Dynamic values
 
