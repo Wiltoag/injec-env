@@ -16,6 +16,7 @@ It is possible to :
 - Set an existing variable, which is reverted once the program stops.
 - Add values to the `Path` variable.
 - Does not revert values if the said values has changed while the program was active.
+- If you are a dummy dumb and remove the disk the software is running on, it will revert automatically, if it ever keeps running somehow.
 
 ## Dynamic values
 
