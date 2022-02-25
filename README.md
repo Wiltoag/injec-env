@@ -34,7 +34,7 @@ The program runs on [NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet
 
 [A version of NET 6.0 runtime compatible](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-6.0.2-windows-x64-binaries).
 
-To start the program, you will have to execute the `.exe` using the `dotnet` command. For example :
+To start the program, you will have to execute the `.dll` using the `dotnet` command. For example :
 ```cmd
 cd "path/to/Injec Env"
 path/to/NET6/dotnet.exe "Injec Env.dll"
