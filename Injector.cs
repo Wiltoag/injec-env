@@ -144,7 +144,8 @@ namespace injecenv
             else
             {
                 keyValue = keyValue.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
-                if (keyValue.StartsWith(Path.DirectorySeparatorChar))
+                if (keyValue.StartsWith(Path.DirectorySeparatorChar) &&
+                    !keyValue.StartsWith($"{Path.DirectorySeparatorChar}{Path.DirectorySeparatorChar}"))
                 {
                     value = Drive.Name.Substring(0, Drive.Name.Length - 1) + keyValue;
                 }
