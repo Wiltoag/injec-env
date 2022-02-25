@@ -27,3 +27,15 @@ Values will be written differently :
 - You can, obviously, set absolute paths (ex:`C:/path/to/stuff`).
 
 Paths will be normalized by replacing `/` to `\\`.
+
+# Last warning ⚠
+
+The program runs on [NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0), so you WILL require, at least, the NET 6.0 runtime (Desktop not needed).
+
+[A version of NET 6.0 runtime compatible](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-6.0.2-windows-x64-binaries).
+
+To start the program, you will have to execute the `.exe` using the `dotnet` command. For example :
+```cmd
+cd "path/to/Injec Env"
+path/to/NET6/dotnet.exe "Injec Env.dll"
+```
