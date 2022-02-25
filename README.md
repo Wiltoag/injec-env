@@ -11,7 +11,8 @@ To use it, create a config file called `rules.json` next to the `Injec Env.exe`.
 
 Once done, just start the .exe and it will do its magic. To stop, write `exit` or Ctrl+C. **DO NOT CLOSE THE WINDOW OR KILL THE PROCESS** ; doing so will likely not give enough time to revert the changes.
 
-It is possible to :
+### Features :
+
 - Set a new variable, which is deleted once the program stops.
 - Set an existing variable, which is reverted once the program stops.
 - Add values to the `Path` variable.
