@@ -105,13 +105,14 @@ namespace injecenv
             }
             if (rules.Paths.Any())
             {
-                var result = Environment.GetEnvironmentVariable(PathEnvironnementVariable, EnvironmentVariableTarget.User) ?? "";
+                var result = "";
                 foreach (var pathToAdd in rules.Paths)
                 {
                     var value = GetValue(pathToAdd);
                     PathsToRemove.Add(value);
                     result += value + Path.PathSeparator;
                 }
+                result += Environment.GetEnvironmentVariable(PathEnvironnementVariable, EnvironmentVariableTarget.User) ?? "";
                 Console.WriteLine("Added to  " + PathEnvironnementVariable.Pastel(Color.LightYellow) + " :");
                 Console.WriteLine(string.Join("\n", PathsToRemove.Select(a => "    " + a.Pastel(Color.LightGreen))));
                 Environment.SetEnvironmentVariable(PathEnvironnementVariable, result, EnvironmentVariableTarget.User);
