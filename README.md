@@ -41,3 +41,5 @@ To start the program, you will have to execute the `.dll` using the `dotnet` com
 cd "path/to/Injec Env"
 path/to/NET6/dotnet.exe "Injec Env.dll"
 ```
+
+Or just clone the repo, publish the software with the runtime and you are good to go.
